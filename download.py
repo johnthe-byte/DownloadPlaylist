@@ -83,10 +83,10 @@ _parser.add_argument(
 _parser.add_argument(
     "-t", "--FileType", "--filetype",
     type = str,
-    default = "m4a",
+    default = "audio/m4a",
     choices=["video/webm", "video/mp4", "audio/mp4", "audio/m4a"],
     metavar = "FILETYPE",
-    help = _Format.Help("File format of playlist video.","'audio/m4a'",'{mp3, mp4, m4a}')
+    help = _Format.Help("File format of playlist video.","'audio/m4a'",'{"video/webm", "video/mp4", "audio/mp4", "audio/m4a"}')
 )
 _parser.add_argument(
     "-p", "--Proxy", "--proxy",
