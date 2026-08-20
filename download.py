@@ -45,21 +45,20 @@ class _Format:
         return helpstring+extraInfo
 def _create_directory(path):
     try:
-        #print('fake')
         os.makedirs(path)
     except OSError as e:
         print(_Format.Stat(0,f"Error while creating directory '{path}'."))
         exit(0)
     print(_Format.Stat(1,f"Directory '{path}' created successfully."))
 #Variables
-global ARGS
-global FORCE
-global FILETYPE
-global YTURL
-global PLAYLIST
-global OUTPUT_DIRECTORY
-global PROXY
-global FILELIST
+ARGS=None
+FORCE=None
+FILETYPE=None
+YTURL=None
+PLAYLIST=None
+OUTPUT_DIRECTORY=None
+PROXY=None
+FILELIST=None
 #Parameters
 _parser = argparse.ArgumentParser(
     prog='Download Playlist (Windows)',
@@ -75,7 +74,7 @@ _parser.add_argument(
 )
 _parser.add_argument(
     "-o", "--OutputDirectory", "--outputdirectory",
-    type = str,
+    type = Path,
     default = f"~/Downloads/?\uE000",
     metavar = "DIR",
     help = _Format.Help("Path to the output directory.","'$HOME/Downloads/{PlaylistName}'")
@@ -110,25 +109,22 @@ _parser.add_argument(
 )
 class _ParamEval:
     #Argument definition
-    ARGS = _parser.parse_args()
-    def __init__(self,parser):
-        global ARGS
-        ARGS = self.ARGS
+    args = _parser.parse_args()
     #FORCE
     @classmethod
     def _force(cls):
         global FORCE
-        FORCE = cls.ARGS.Force
+        FORCE = cls.args.Force
     #FILETYPE
     @classmethod
     def _filetype(cls):
         global FILETYPE
-        FILETYPE = cls.ARGS.FileType
+        FILETYPE = cls.args.FileType
     #YTURL
     @classmethod
     def _yturl(cls):
         global YTURL
-        YTURL=cls.ARGS.Url
+        YTURL=cls.args.Url
         assert "youtube.com" in urlparse(YTURL).netloc
     #PLAYLIST
     @classmethod
@@ -143,15 +139,15 @@ class _ParamEval:
         global FORCE
         #Execute
         #   If a proxy is supplied by user
-        if cls.ARGS.Proxy==True and not FORCE:
+        if cls.args.Proxy==True and not FORCE:
             _input = input(_Format.Stat(4, f"Notice: You have not specified a proxy, would you like to add one?", "(<IpAddr>ProxyAddr/<None>Continue) > ","You may want to consider adding a proxy to avoid potential Youtube ip blocking (Ex. 192.168.0.1)."))
             if _input:
-                cls.ARGS.Proxy=_input
+                cls.args.Proxy=_input
         #   If the proxy argument exists (default or supplied)
-        if cls.ARGS.Proxy:
+        if cls.args.Proxy:
             PROXY = {
-                "http": f"socks5://{cls.ARGS.Proxy}",
-                "https": f"socks5://{cls.ARGS.Proxy}"
+                "http": f"socks5://{cls.args.Proxy}",
+                "https": f"socks5://{cls.args.Proxy}"
             }
             #   FIX VALIDATION LATER! (Given the circumstances I need this program up and running, don't have the time to deal with this)
             '''
@@ -164,19 +160,15 @@ class _ParamEval:
         #Variables
         global OUTPUT_DIRECTORY
         global FORCE
-        OUTPUT_DIRECTORY = cls.ARGS.OutputDirectory.expanduser().resolve()
+        OUTPUT_DIRECTORY = cls.args.OutputDirectory.expanduser().resolve()
         _PARENT_DIRECTORY = lambda : Path(str(OUTPUT_DIRECTORY)+'/..').expanduser().resolve() #its an expression
         #Logic functions
-        OutputPathIsFolder=lambda:OUTPUT_DIRECTORY==Path("~/Downloads").expanduser().resolve()
         OutputPathNotExist=lambda:not OUTPUT_DIRECTORY.exists()
         OutputParamIsDefault=lambda:FORCE or (OUTPUT_DIRECTORY==Path("~/Downloads/?\uE000").expanduser().resolve())
         OutputPathParentIsUser=lambda:_PARENT_DIRECTORY()==Path("~").expanduser().resolve() and not FORCE
         #Execute
-        if OutputPathIsFolder:
-            OUTPUT_DIRECTORY = Path(str(OUTPUT_DIRECTORY) + "/" + PLAYLIST.title)
-            _create_directory(OUTPUT_DIRECTORY)
-        if OutputPathNotExist:
-            if OutputParamIsDefault:
+        if OutputPathNotExist():
+            if OutputParamIsDefault():
                 try:
                     OUTPUT_DIRECTORY = Path(str(OUTPUT_DIRECTORY)[0:-2] + "/" + PLAYLIST.title)
                     _create_directory(OUTPUT_DIRECTORY)
@@ -201,7 +193,7 @@ class _ParamEval:
             #   OsError if Path is not a directory
             FILELIST=os.listdir(OUTPUT_DIRECTORY)
         #   Prevent accidental output into an unwanted directory, like downloads.
-        if OutputPathParentIsUser:
+        if OutputPathParentIsUser():
             _input = input(_Format.Stat(3,f"Output directory '{OUTPUT_DIRECTORY}' Parent is UserFolder, did you intend to output playlist into UserFolder?","(y/<string>PlaylistName/<None>Cancel) > ", "Please specify a playlist folder name ('y' to keep output directory, leave blank to cancel)."))
             #   User has specified a playlist name
             if _input and _input.lower()[0] != "y":
@@ -214,18 +206,22 @@ class _ParamEval:
             #   User has chosen option 'y', (sorry about the poor decision block organization)
     @classmethod
     def paramInterpret(cls,*,_nUseExit=0):
+        global ARGS
+        ARGS = cls.args
         #   Prevent function looping risk entirely
-        if _nUseExit==1: return 0
+        if _nUseExit==0: return 0
         #   Execute all non-class functions except for this function
-        for key in dir(cls):
-            funcVal=cls.__getattribute__(cls,key)
-            if key.startswith("__") and callable(funcVal) and key!='paramInterpret':
+        for key in cls.__dict__.keys():
+            funcVal=getattr(cls,key)
+            logger.info(key)
+            if not key.startswith("__") and callable(funcVal) and key.startswith("_") and key!='paramInterpret':
                 logger.info(f"Param init, '{key}' function started")
-                funcVal(_nUseExit=1)
+                funcVal()
                 logger.info(f"Param init, '{key}' function complete")
         return 1
 #Functions
 def download_playlist(playlist):
+    globals().update({})
     #Functions
     def _download(video_url):
         #Prerequisites
@@ -287,6 +283,5 @@ def Main():
     print(_Format.Stat(1,f"Playlist downloaded in {finalTime:.2f}s."))
     logger.info('End (-)')
 #Execute
-if __name__ == '__main___':
-    _ParamEval.paramInterpret()
-    Main()
+_ParamEval.paramInterpret(_nUseExit=1)
+Main()

@@ -1,0 +1,53 @@
+INFO:__main__:Begin (*)
+INFO:__main__:Begin (*)
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:__main__:Begin (*)
+INFO:__main__:Compiling download tasks
+INFO:__main__:Download 'ecfd0231' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download 'ecfd0231' completed with time (6.91)s
+INFO:__main__:Download 'e6553999' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download 'e6553999' completed with time (5.92)s
+INFO:__main__:Download '999ad037' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download '999ad037' completed with time (5.36)s
+INFO:__main__:Download '3033f542' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download '3033f542' completed with time (5.44)s
+INFO:__main__:Download '46e85831' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download '46e85831' completed with time (7.17)s
+INFO:__main__:Download 'cc4180e0' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download 'cc4180e0' completed with time (5.58)s
+INFO:__main__:Download '01952110' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download '01952110' completed with time (5.68)s
+INFO:__main__:Download '094beb01' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download '094beb01' completed with time (5.29)s
+INFO:__main__:Download 'a060cda7' started
+INFO:pytubefix.cipher:Recovered nsig XOR params for https://youtube.com/s/player/3891b194/player_ias.vflset/en_US/base.js: [20, 3701]
+INFO:__main__:Download 'a060cda7' completed with time (23.30)s
+INFO:__main__:Download '9deb331f' started
+INFO:__main__:Download '9deb331f' completed with time (6.04)s
+INFO:__main__:Download '364feaa7' started
