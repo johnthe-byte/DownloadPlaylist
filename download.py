@@ -75,7 +75,7 @@ _parser.add_argument(
 )
 _parser.add_argument(
     "-o", "--OutputDirectory", "--outputdirectory",
-    type = Path,
+    type = str,
     default = f"~/Downloads/?\uE000",
     metavar = "DIR",
     help = _Format.Help("Path to the output directory.","'$HOME/Downloads/{PlaylistName}'")
